@@ -1,8 +1,8 @@
 #include "strongHold.h"
 #include <iostream>
 #include <fstream>
-#include <cstdlib> // For rand()
-#include <ctime>   // For time()
+#include <cstdlib> 
+#include <ctime>   
 
 // Constructor
 Banking::Banking() : loanAmount(0), interestRate(0.1f), isFraudDetected(false) {
