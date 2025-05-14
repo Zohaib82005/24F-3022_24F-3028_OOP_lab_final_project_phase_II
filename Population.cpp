@@ -30,7 +30,7 @@ void Population::shrinkPopulation() {
 
 // Method to simulate a revolt
 void Population::revolt() {
-    std::cout << "The population is revolting!\n";
+     cout << "The population is revolting!\n";
     peasants /= 2; // Lose half the peasants
     merchants /= 2; // Lose half the merchants
     nobles /= 2;    // Lose half the nobles
@@ -54,34 +54,34 @@ void Population::update() {
 }
 
 // Save population state to a file
-void Population::saveToFile(const std::string& filename) {
-    std::ofstream file(filename);
+void Population::saveToFile(const  string& filename) {
+     ofstream file(filename);
     if (file.is_open()) {
         file << peasants << " " << merchants << " " << nobles;
         file.close();
-        std::cout << "Population saved to " << filename << "\n";
+         cout << "Population saved to " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to save population to file.\n";
+         cerr << "Error: Unable to save population to file.\n";
     }
 }
 
 // Load population state from a file
-void Population::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void Population::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
         file >> peasants >> merchants >> nobles;
         file.close();
-        std::cout << "Population loaded from " << filename << "\n";
+         cout << "Population loaded from " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to load population from file.\n";
+         cerr << "Error: Unable to load population from file.\n";
     }
 }
 
 // Get population status as a string
-std::string Population::getStatus() const {
-    return "Peasants: " + std::to_string(peasants) +
-        ", Merchants: " + std::to_string(merchants) +
-        ", Nobles: " + std::to_string(nobles);
+ string Population::getStatus() const {
+    return "Peasants: " +  to_string(peasants) +
+        ", Merchants: " +  to_string(merchants) +
+        ", Nobles: " +  to_string(nobles);
 }
