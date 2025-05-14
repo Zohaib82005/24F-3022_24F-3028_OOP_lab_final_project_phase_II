@@ -10,20 +10,20 @@ Leadership::Leadership() : leaderName("No Leader"), leadershipStyle("Neutral"), 
 }
 
 // Method to elect a new leader
-void Leadership::electLeader(const std::string& name, const std::string& style) {
+void Leadership::electLeader(const  string& name, const  string& style) {
     if (name.empty() || style.empty()) {
-        throw std::invalid_argument("Leader name and leadership style must not be empty.");
+        throw  invalid_argument("Leader name and leadership style must not be empty.");
     }
     leaderName = name;
     leadershipStyle = style;
     isCoupAttempted = false; // Reset coup status after election
-    std::cout << "New leader elected: " << leaderName << " (" << leadershipStyle << ")\n";
+     cout << "New leader elected: " << leaderName << " (" << leadershipStyle << ")\n";
 }
 
 // Method to handle a coup attempt
 void Leadership::handleCoup() {
     if (isCoupAttempted) {
-        std::cout << "A coup has already been attempted. Stability is fragile.\n";
+         cout << "A coup has already been attempted. Stability is fragile.\n";
         return;
     }
     int successChance = rand() % 100; // Random chance of coup success (0-99)
@@ -31,10 +31,10 @@ void Leadership::handleCoup() {
         leaderName = "Rebel Leader";
         leadershipStyle = "Autocratic";
         isCoupAttempted = true;
-        std::cout << "Coup successful! New leader: " << leaderName << " (" << leadershipStyle << ")\n";
+         cout << "Coup successful! New leader: " << leaderName << " (" << leadershipStyle << ")\n";
     }
     else {
-        std::cout << "Coup attempt failed. Current leader remains in power.\n";
+         cout << "Coup attempt failed. Current leader remains in power.\n";
     }
 }
 
@@ -50,44 +50,44 @@ void Leadership::update() {
         try {
             electLeader("Elected Leader", "Democratic");
         }
-        catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << "\n";
+        catch (const  exception& e) {
+             cerr << "Error: " << e.what() << "\n";
         }
         break;
     case 2:
-        std::cout << "No significant leadership changes this turn.\n";
+         cout << "No significant leadership changes this turn.\n";
         break;
     }
 }
 
 // Save leadership state to a file
-void Leadership::saveToFile(const std::string& filename) {
-    std::ofstream file(filename);
+void Leadership::saveToFile(const  string& filename) {
+     ofstream file(filename);
     if (file.is_open()) {
         file << leaderName << " " << leadershipStyle << " " << isCoupAttempted;
         file.close();
-        std::cout << "Leadership state saved to " << filename << "\n";
+         cout << "Leadership state saved to " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to save leadership state to file.\n";
+         cerr << "Error: Unable to save leadership state to file.\n";
     }
 }
 
 // Load leadership state from a file
-void Leadership::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void Leadership::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
         file >> leaderName >> leadershipStyle >> isCoupAttempted;
         file.close();
-        std::cout << "Leadership state loaded from " << filename << "\n";
+         cout << "Leadership state loaded from " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to load leadership state from file.\n";
+         cout << "Error: Unable to load leadership state from file.\n";
     }
 }
 
 // Get leadership status as a string
-std::string Leadership::getStatus() const {
+ string Leadership::getStatus() const {
     return "Leader: " + leaderName +
         ", Style: " + leadershipStyle +
         ", Coup Attempted: " + (isCoupAttempted ? "Yes" : "No");

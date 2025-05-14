@@ -1,9 +1,9 @@
 #include "strongHold.h"
 #include <iostream>
 
-Kingdom::Kingdom(const std::string& kingdomName) : name(kingdomName) {}
+Kingdom::Kingdom(const  string& kingdomName) : name(kingdomName) {}
 
-std::string Kingdom::getName() const {
+ string Kingdom::getName() const {
     return name;
 }
 
@@ -18,14 +18,19 @@ void Kingdom::updateAllSystems() {
 }
 
 void Kingdom::displayStatus() const {
-    std::cout << "\n=== Status of " << name << " ===\n";
-    std::cout << population.getStatus() << "\n";
-    std::cout << military.getStatus() << "\n";
-    std::cout << economy.getStatus() << "\n";
-    std::cout << leadership.getStatus() << "\n";
-    std::cout << banking.getStatus() << "\n";
-    std::cout << resources.getStatus() << "\n";
-    std::cout << events.getStatus() << "\n";
+    cout << "\n=== Status of " << name << " ===\n";
+    cout << population.getStatus() << "\n";
+    cout << military.getStatus() << "\n";
+    cout << economy.getStatus() << "\n";
+    cout << leadership.getStatus() << "\n";
+    cout << banking.getStatus() << "\n";
+    cout << resources.getStatus() << "\n";
+    cout << getLastEvent() << "\n";
+    
+}
+
+string Kingdom::getLastEvent() const {
+    return events.getStatus();
 }
 
 void Kingdom::saveState() {
@@ -47,6 +52,10 @@ void Kingdom::loadState() {
     resources.loadFromFile(name + "_resources.txt");
     events.loadFromFile(name + "_events.txt");
 }
+void Kingdom::eventTrigger() {
+    lastEvents = events.triggerRandomEvent();
+}
+
 
 Economy& Kingdom::getEconomy() { return economy; }
 Military& Kingdom::getMilitary() { return military; }

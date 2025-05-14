@@ -1,24 +1,24 @@
 #include "strongHold.h"
 
-void DiplomacySystem::formAlliance(const std::string& k1, const std::string& k2) {
+void DiplomacySystem::formAlliance(const  string& k1, const  string& k2) {
     alliances[k1].insert(k2);
     alliances[k2].insert(k1);
 
-    std::string log = k1 + " formed an alliance with " + k2;
+     string log = k1 + " formed an alliance with " + k2;
     history.push_back(log);
-    std::cout << log << "\n";
+     cout << log << "\n";
 }
 
-void DiplomacySystem::breakAlliance(const std::string& k1, const std::string& k2) {
+void DiplomacySystem::breakAlliance(const  string& k1, const  string& k2) {
     alliances[k1].erase(k2);
     alliances[k2].erase(k1);
 
-    std::string log = k1 + " broke alliance with " + k2;
+     string log = k1 + " broke alliance with " + k2;
     history.push_back(log);
-    std::cout << log << "\n";
+     cout << log << "\n";
 }
 
-bool DiplomacySystem::isAllied(const std::string& k1, const std::string& k2) const {
+bool DiplomacySystem::isAllied(const  string& k1, const  string& k2) const {
     auto it = alliances.find(k1);
     if (it != alliances.end()) {
         return it->second.count(k2) > 0;
@@ -27,25 +27,25 @@ bool DiplomacySystem::isAllied(const std::string& k1, const std::string& k2) con
 }
 
 void DiplomacySystem::viewAlliances() const {
-    std::cout << "\n--- Current Alliances ---\n";
+     cout << "\n--- Current Alliances ---\n";
     for (const auto& pair : alliances) {
-        std::cout << pair.first << " is allied with: ";
+         cout << pair.first << " is allied with: ";
         for (const auto& ally : pair.second) {
-            std::cout << ally << " ";
+             cout << ally << " ";
         }
-        std::cout << "\n";
+         cout << "\n";
     }
 }
 
 void DiplomacySystem::viewHistory() const {
-    std::cout << "\n--- Alliance History ---\n";
+     cout << "\n--- Alliance History ---\n";
     for (const auto& record : history) {
-        std::cout << record << "\n";
+         cout << record << "\n";
     }
 }
 
-void DiplomacySystem::saveToFile(const std::string& filename) const {
-    std::ofstream file(filename);
+void DiplomacySystem::saveToFile(const  string& filename) const {
+     ofstream file(filename);
     if (file.is_open()) {
         for (const auto& pair : alliances) {
             for (const auto& ally : pair.second) {
@@ -55,24 +55,24 @@ void DiplomacySystem::saveToFile(const std::string& filename) const {
             }
         }
         file.close();
-        std::cout << "Alliances saved to " << filename << "\n";
+         cout << "Alliances saved to " << filename << "\n";
     }
 }
 
-void DiplomacySystem::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void DiplomacySystem::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
         alliances.clear();
-        std::string line;
+         string line;
         while (getline(file, line)) {
             size_t sep = line.find("|");
-            if (sep != std::string::npos) {
-                std::string k1 = line.substr(0, sep);
-                std::string k2 = line.substr(sep + 1);
+            if (sep !=  string::npos) {
+                 string k1 = line.substr(0, sep);
+                 string k2 = line.substr(sep + 1);
                 formAlliance(k1, k2);
             }
         }
         file.close();
-        std::cout << "Alliances loaded from " << filename << "\n";
+         cout << "Alliances loaded from " << filename << "\n";
     }
 }

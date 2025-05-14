@@ -4,42 +4,41 @@
 #include <string>
 
 void displayMainMenu() {
-    std::cout << "\n=== Stronghold Multiplayer Menu ===\n";
-    std::cout << "1. View Kingdom Status\n";
-    std::cout << "2. Update All Systems\n";
-    std::cout << "3. Save Game\n";
-    std::cout << "4. Load Game\n";
-    std::cout << "5. Send Message\n";
-    std::cout << "6. View Chat Log\n";
-    std::cout << "7. Save Chat\n";
-    std::cout << "8. Load Chat\n";
+     cout << "\n=== Stronghold Multiplayer Menu ===\n";
+     cout << "1. View Kingdom Status\n";
+     cout << "2. Update All Systems\n";
+     cout << "3. Save Game\n";
+     cout << "4. Load Game\n";
+     cout << "5. Send Message\n";
+     cout << "6. View Chat Log\n";
+     cout << "7. Save Chat\n";
+     cout << "8. Load Chat\n";
 
-    std::cout << "9. Form Alliance\n";
-    std::cout << "10. Break Alliance\n";
-    std::cout << "11. View Alliances\n";
-    std::cout << "12. View Alliance History\n";
-    std::cout << "13. Save Diplomacy\n";
-    std::cout << "14. Load Diplomacy\n";
-
-
-    std::cout << "15. Trade Resources\n";
-    std::cout << "16. Smuggle Resources\n";
-    std::cout << "17. View Trade History\n";
-    std::cout << "18. Save Trade Log\n";
-    std::cout << "19. Load Trade Log\n";
+     cout << "9. Form Alliance\n";
+     cout << "10. Break Alliance\n";
+     cout << "11. View Alliances\n";
+     cout << "12. View Alliance History\n";
+     cout << "13. Save Diplomacy\n";
+     cout << "14. Load Diplomacy\n";
 
 
-    std::cout << "20. Declare War\n";
-    std::cout << "21. View Conflict History\n";
-    std::cout << "22. Save Conflict Log\n";
-    std::cout << "23. Load Conflict Log\n";
-    std::cout << "24. View Map\n";
-    std::cout << "25. Move Kingdom\n";
+     cout << "15. Trade Resources\n";
+     cout << "16. Smuggle Resources\n";
+     cout << "17. View Trade History\n";
+     cout << "18. Save Trade Log\n";
+     cout << "19. Load Trade Log\n";
 
-    std::cout << "26. Take Action This Season (per kingdom)\n";
 
-    std::cout << "27. Exit\n";
-    std::cout << "Enter choice: ";
+     cout << "20. Declare War\n";
+     cout << "21. View Conflict History\n";
+     cout << "22. Save Conflict Log\n";
+     cout << "23. Load Conflict Log\n";
+     cout << "24. View Map\n";
+
+     cout << "25. Take Action This Season (per kingdom)\n";
+     cout << "26. Trigger a event\n";
+     cout << "27. Exit\n";
+     cout << "Enter choice: ";
 }
 int main() {
     MapSystem map;
@@ -47,34 +46,37 @@ int main() {
     ChatSystem chat;
     DiplomacySystem diplomacy;
     TradeSystem tradeSys;
-    std::vector<Kingdom> kingdoms;
+    Events event;
+    bool kfound = false;
+     vector<Kingdom> kingdoms;
     int numPlayers;
-
-    std::cout << "Enter number of kingdoms (players): ";
-    std::cin >> numPlayers;
-    std::cin.ignore(); // Clear newline
+    string kingEvent;
+     cout << "Enter number of kingdoms (players): ";
+     cin >> numPlayers;
+     cin.ignore(); // Clear newline
 
     for (int i = 0; i < numPlayers; ++i) {
-        std::string name;
-        std::cout << "Enter name for Kingdom " << (i + 1) << ": ";
-        std::getline(std::cin, name);
+         string name;
+         cout << "Enter name for Kingdom " << (i + 1) << ": ";
+         getline( cin, name);
         kingdoms.emplace_back(name);
 
         int x = rand() % 10;
         int y = rand() % 10;
-        map.placeKingdom(name, x, y);  // Place each kingdom on the map
+        map.placeKingdom(name, x, y);  // Place each kingdomÂ onÂ theÂ map
     }
 
     bool running = true;
     while (running) {
         displayMainMenu();
         int choice;
-        std::cin >> choice;
+         cin >> choice;
 
         switch (choice) {
         case 1: // View Status
-            for (const auto& k : kingdoms)
+            for ( auto &k : kingdoms) {
                 k.displayStatus();
+            }
             break;
 
         case 2: // Update Systems
@@ -85,23 +87,23 @@ int main() {
         case 3: // Save
             for (auto& k : kingdoms)
                 k.saveState();
-            std::cout << "All kingdom states saved.\n";
+             cout << "All kingdom states saved.\n";
             break;
 
         case 4: // Load
             for (auto& k : kingdoms)
                 k.loadState();
-            std::cout << "All kingdom states loaded.\n";
+             cout << "All kingdom states loaded.\n";
             break;
-        case 5: { // Send Message
-            std::string sender, receiver, content;
-            std::cin.ignore();
-            std::cout << "Enter sender kingdom: ";
-            std::getline(std::cin, sender);
-            std::cout << "Enter receiver kingdom: ";
-            std::getline(std::cin, receiver);
-            std::cout << "Enter message: ";
-            std::getline(std::cin, content);
+        case 5: { 
+             string sender, receiver, content;
+             cin.ignore();
+             cout << "Enter sender kingdom: ";
+             getline( cin, sender);
+             cout << "Enter receiver kingdom: ";
+             getline( cin, receiver);
+             cout << "Enter message: ";
+             getline( cin, content);
             chat.sendMessage(sender, receiver, content);
             break;
         }
@@ -118,18 +120,18 @@ int main() {
             chat.loadChatFromFile("chat_log.txt");
             break;
         case 9: {
-            std::string a, b;
-            std::cin.ignore();
-            std::cout << "Enter first kingdom: "; std::getline(std::cin, a);
-            std::cout << "Enter second kingdom: "; std::getline(std::cin, b);
+             string a, b;
+             cin.ignore();
+             cout << "Enter first kingdom: ";  getline( cin, a);
+             cout << "Enter second kingdom: ";  getline( cin, b);
             diplomacy.formAlliance(a, b);
             break;
         }
         case 10: {
-            std::string a, b;
-            std::cin.ignore();
-            std::cout << "Enter first kingdom: "; std::getline(std::cin, a);
-            std::cout << "Enter second kingdom: "; std::getline(std::cin, b);
+             string a, b;
+             cin.ignore();
+             cout << "Enter first kingdom: ";  getline( cin, a);
+             cout << "Enter second kingdom: ";  getline( cin, b);
             diplomacy.breakAlliance(a, b);
             break;
         }
@@ -146,24 +148,24 @@ int main() {
             diplomacy.loadFromFile("diplomacy.txt");
             break;
         case 15: {
-            std::string from, to, res;
+             string from, to, res;
             int amt;
-            std::cin.ignore();
-            std::cout << "Sender kingdom: "; getline(std::cin, from);
-            std::cout << "Receiver kingdom: "; getline(std::cin, to);
-            std::cout << "Resource (Food/Wood/Stone/Iron): "; getline(std::cin, res);
-            std::cout << "Amount: "; std::cin >> amt;
+             cin.ignore();
+             cout << "Sender kingdom: "; getline( cin, from);
+             cout << "Receiver kingdom: "; getline( cin, to);
+             cout << "Resource (Food/Wood/Stone/Iron): "; getline( cin, res);
+             cout << "Amount: ";  cin >> amt;
             tradeSys.performTrade(from, to, res, amt);
             break;
         }
         case 16: {
-            std::string from, to, res;
+             string from, to, res;
             int amt;
-            std::cin.ignore();
-            std::cout << "Sender kingdom: "; getline(std::cin, from);
-            std::cout << "Receiver kingdom: "; getline(std::cin, to);
-            std::cout << "Resource (Food/Wood/Stone/Iron): "; getline(std::cin, res);
-            std::cout << "Amount: "; std::cin >> amt;
+             cin.ignore();
+             cout << "Sender kingdom: "; getline( cin, from);
+             cout << "Receiver kingdom: "; getline( cin, to);
+             cout << "Resource (Food/Wood/Stone/Iron): "; getline( cin, res);
+             cout << "Amount: ";  cin >> amt;
             tradeSys.performSmuggling(from, to, res, amt);
             break;
         }
@@ -177,10 +179,10 @@ int main() {
             tradeSys.loadFromFile("trade_log.txt");
             break;
         case 20: {
-            std::string atk, def;
-            std::cin.ignore();
-            std::cout << "Attacker kingdom: "; getline(std::cin, atk);
-            std::cout << "Defender kingdom: "; getline(std::cin, def);
+             string atk, def;
+             cin.ignore();
+             cout << "Attacker kingdom: "; getline( cin, atk);
+             cout << "Defender kingdom: "; getline( cin, def);
 
             Kingdom* attackerPtr = nullptr;
             Kingdom* defenderPtr = nullptr;
@@ -194,7 +196,7 @@ int main() {
                 conflict.declareWar(*attackerPtr, *defenderPtr, diplomacy);
             }
             else {
-                std::cout << "Invalid kingdom names.\n";
+                 cout << "Invalid kingdom names.\n";
             }
             break;
         }
@@ -213,20 +215,11 @@ int main() {
         case 24:
             map.displayMap();
             break;
-
         case 25: {
-            std::string name, direction;
-            std::cin.ignore();
-            std::cout << "Enter kingdom name: "; getline(std::cin, name);
-            std::cout << "Enter direction (up/down/left/right): "; getline(std::cin, direction);
-            map.moveKingdom(name, direction);
-            break;
-        }
-        case 26: {
-            std::string name;
-            std::cin.ignore();
-            std::cout << "Enter kingdom name: ";
-            getline(std::cin, name);
+             string name;
+             cin.ignore();
+             cout << "Enter kingdom name: ";
+            getline( cin, name);
 
             Kingdom* target = nullptr;
             for (auto& k : kingdoms) {
@@ -237,49 +230,49 @@ int main() {
             }
 
             if (!target) {
-                std::cout << "Kingdom not found.\n";
+                 cout << "Kingdom not found.\n";
                 break;
             }
 
             int action;
-            std::cout << "\nWhat would you like to do this season?\n";
-            std::cout << "1. Collect taxes\n";
-            std::cout << "2. Recruit soldiers\n";
-            std::cout << "3. Train army\n";
-            std::cout << "4. Build structure on map \n";
-            std::cout << "5. Spend on services \n";
-            std::cout << "6. Change policy (placeholder)\n";
-            std::cout << "7. Do nothing\n";
-            std::cout << "Enter action: ";
-            std::cin >> action;
+             cout << "\nWhat would you like to do this season?\n";
+             cout << "1. Collect taxes\n";
+             cout << "2. Recruit soldiers\n";
+             cout << "3. Train army\n";
+             cout << "4. Build structure on map \n";
+             cout << "5. Spend on services \n";
+             cout << "6. Change policy (placeholder)\n";
+             cout << "7. Do nothing\n";
+             cout << "Enter action: ";
+             cin >> action;
 
             switch (action) {
             case 1:
                 try {
                     target->getEconomy().collectTaxes(rand() % 100 + 50); // simulate pop
                 }
-                catch (const std::exception& e) {
-                    std::cerr << "Error: " << e.what() << "\n";
+                catch (const  exception& e) {
+                     cerr << "Error: " << e.what() << "\n";
                 }
                 break;
             case 2:
                 try {
                     target->getMilitary().recruitSoldiers(rand() % 50 + 10);
                 }
-                catch (const std::exception& e) {
-                    std::cerr << "Error: " << e.what() << "\n";
+                catch (const  exception& e) {
+                     cerr << "Error: " << e.what() << "\n";
                 }
                 break;
             case 3:
                 target->getMilitary().trainArmy();
                 break;
             case 4: {
-                std::string structure;
-                std::cin.ignore();
-                std::cout << "Enter structure to build (Fort / Farm): ";
-                getline(std::cin, structure);
+                 string structure;
+                 cin.ignore();
+                 cout << "Enter structure to build (Fort / Farm): ";
+                getline( cin, structure);
 
-                // Build at the kingdom’s current map location
+                // Build at the kingdomâ€™s current map location
                 map.buildStructure(target->getName(), structure);
 
                 // Optional effects
@@ -296,30 +289,49 @@ int main() {
                 try {
                     target->getEconomy().adjustTaxRate(0.2f); // simulate stability policy
                     target->getMilitary().trainArmy(); // improve morale slightly
-                    std::cout << name << " spent on public services. Morale and satisfaction improved.\n";
+                     cout << name << " spent on public services. Morale and satisfaction improved.\n";
                 }
-                catch (const std::exception& e) {
-                    std::cerr << "Error: " << e.what() << "\n";
+                catch (const  exception& e) {
+                     cerr << "Error: " << e.what() << "\n";
                 }
                 break;
 
             case 6:
-                std::cout << "This feature is not implemented yet.\n";
+                 cout << "This feature is not implemented yet.\n";
                 break;
             case 7:
-                std::cout << "No action taken.\n";
+                 cout << "No action taken.\n";
                 break;
             default:
-                std::cout << "Invalid seasonal action.\n";
+                 cout << "Invalid seasonal action.\n";
                 break;
             }
             break;
         }
+        case 26:
+            
+            cout << "Triggering a random Event\n";
+            cout << "Enter Kingdom Name: ";
+            cin.ignore();
+            getline(cin, kingEvent);
+            for (auto &k : kingdoms) {
+                if (k.getName() == kingEvent) {
+                    k.eventTrigger();
+                    kfound = true;
+                    cout << "Kingdom found and event triggerd";
+                    cout << "Event is: " << k.getLastEvent() << endl;
+                    break;
+                }
+
+            }
+            if (!kfound) {
+                cout << "No Kingdom Found of name: " << kingEvent << endl;
+            break;
         case 27:
             running = false;
             break;
         default:
-            std::cout << "Invalid choice.\n";
+             cout << "Invalid choice.\n";
             break;
         }
     }

@@ -1,8 +1,8 @@
 #include "strongHold.h"
 #include <iostream>
 #include <fstream>
-#include <cstdlib> 
-#include <ctime>   
+#include <cstdlib> // For rand()
+#include <ctime>   // For time()
 
 // Constructor
 Banking::Banking() : loanAmount(0), interestRate(0.1f), isFraudDetected(false) {
@@ -12,11 +12,11 @@ Banking::Banking() : loanAmount(0), interestRate(0.1f), isFraudDetected(false) {
 // Method to take a loan
 void Banking::takeLoan(int amount, float rate) {
     if (amount <= 0 || rate < 0.0f) {
-        throw std::invalid_argument("Loan amount must be positive and interest rate must be non-negative.");
+        throw  invalid_argument("Loan amount must be positive and interest rate must be non-negative.");
     }
     loanAmount += amount;
     interestRate = rate;
-    std::cout << "Loan taken: " << amount << " gold at " << rate * 100 << "% interest.\n";
+     cout << "Loan taken: " << amount << " gold at " << rate * 100 << "% interest.\n";
 }
 
 // Method to audit the bank
@@ -24,25 +24,25 @@ void Banking::auditBank() {
     int fraudChance = rand() % 100; // Random chance of detecting fraud (0-99)
     if (fraudChance < 20) { // 20% chance of fraud detection
         isFraudDetected = true;
-        std::cout << "Fraud detected in the banking system!\n";
+         cout << "Fraud detected in the banking system!\n";
     }
     else {
         isFraudDetected = false;
-        std::cout << "No fraud detected. Banking system is clean.\n";
+         cout << "No fraud detected. Banking system is clean.\n";
     }
 }
 
 // Method to repay a loan
 void Banking::repayLoan(int amount) {
     if (amount <= 0) {
-        throw std::invalid_argument("Repayment amount must be positive.");
+        throw  invalid_argument("Repayment amount must be positive.");
     }
     if (amount > loanAmount) {
-        std::cout << "Cannot repay more than the outstanding loan. Repaying full amount instead.\n";
+         cout << "Cannot repay more than the outstanding loan. Repaying full amount instead.\n";
         amount = loanAmount;
     }
     loanAmount -= amount;
-    std::cout << "Repaid " << amount << " gold. Remaining loan: " << loanAmount << "\n";
+     cout << "Repaid " << amount << " gold. Remaining loan: " << loanAmount << "\n";
 }
 
 // Update method (required by the System base class)
@@ -53,7 +53,7 @@ void Banking::update() {
     case 0:
         if (loanAmount > 0) {
             loanAmount += static_cast<int>(loanAmount * interestRate); // Accrue interest
-            std::cout << "Loan interest accrued. New loan amount: " << loanAmount << "\n";
+             cout << "Loan interest accrued. New loan amount: " << loanAmount << "\n";
         }
         break;
     case 1:
@@ -63,42 +63,42 @@ void Banking::update() {
         try {
             repayLoan(rand() % 100 + 50); // Random repayment between 50 and 150
         }
-        catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << "\n";
+        catch (const  exception& e) {
+             cerr << "Error: " << e.what() << "\n";
         }
         break;
     }
 }
 
 // Save banking state to a file
-void Banking::saveToFile(const std::string& filename) {
-    std::ofstream file(filename);
+void Banking::saveToFile(const  string& filename) {
+     ofstream file(filename);
     if (file.is_open()) {
         file << loanAmount << " " << interestRate << " " << isFraudDetected;
         file.close();
-        std::cout << "Banking state saved to " << filename << "\n";
+         cout << "Banking state saved to " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to save banking state to file.\n";
+         cerr << "Error: Unable to save banking state to file.\n";
     }
 }
 
 // Load banking state from a file
-void Banking::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void Banking::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
         file >> loanAmount >> interestRate >> isFraudDetected;
         file.close();
-        std::cout << "Banking state loaded from " << filename << "\n";
+         cout << "Banking state loaded from " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to load banking state from file.\n";
+         cerr << "Error: Unable to load banking state from file.\n";
     }
 }
 
 // Get banking status as a string
-std::string Banking::getStatus() const {
-    return "Loan Amount: " + std::to_string(loanAmount) +
-        ", Interest Rate: " + std::to_string(interestRate * 100) + "%" +
+ string Banking::getStatus() const {
+    return "Loan Amount: " +  to_string(loanAmount) +
+        ", Interest Rate: " +  to_string(interestRate * 100) + "%" +
         ", Fraud Detected: " + (isFraudDetected ? "Yes" : "No");
 }

@@ -13,51 +13,51 @@ void ConflictSystem::declareWar(Kingdom& attacker, Kingdom& defender, DiplomacyS
 
     if (betrayal) {
         diplomacy.breakAlliance(attacker.getName(), defender.getName());
-        std::cout << "⚠  Betrayal! " << attacker.getName() << " attacked their ally " << defender.getName() << "\n";
+         cout << "⚠  Betrayal! " << attacker.getName() << " attacked their ally " << defender.getName() << "\n";
     }
     else {
-        std::cout << attacker.getName() << " has declared war on " << defender.getName() << "\n";
+         cout << attacker.getName() << " has declared war on " << defender.getName() << "\n";
     }
 
     if (attackerWon) {
-        std::cout << attacker.getName() << " wins the battle!\n";
+         cout << attacker.getName() << " wins the battle!\n";
         // Simulate effects
-        std::cout << defender.getName() << " loses 20 army and morale.\n";
-        std::cout << attacker.getName() << " gains 10 morale.\n";
+         cout << defender.getName() << " loses 20 army and morale.\n";
+         cout << attacker.getName() << " gains 10 morale.\n";
     }
     else {
-        std::cout << defender.getName() << " defends successfully!\n";
-        std::cout << attacker.getName() << " loses 15 army and morale.\n";
+         cout << defender.getName() << " defends successfully!\n";
+         cout << attacker.getName() << " loses 15 army and morale.\n";
     }
 
     // You can later apply these effects directly using setter methods in Military if needed
 }
 
 void ConflictSystem::viewConflictHistory() const {
-    std::cout << "\n--- Conflict History ---\n";
+     cout << "\n--- Conflict History ---\n";
     for (const auto& log : history) {
-        std::cout << log.attacker << " attacked " << log.defender;
-        if (log.betrayal) std::cout << " (Betrayal)";
-        std::cout << " -> " << (log.attackerWon ? "Attacker Won" : "Defender Won") << "\n";
+         cout << log.attacker << " attacked " << log.defender;
+        if (log.betrayal)  cout << " (Betrayal)";
+         cout << " -> " << (log.attackerWon ? "Attacker Won" : "Defender Won") << "\n";
     }
 }
 
-void ConflictSystem::saveToFile(const std::string& filename) const {
-    std::ofstream file(filename);
+void ConflictSystem::saveToFile(const  string& filename) const {
+     ofstream file(filename);
     if (file.is_open()) {
         for (const auto& log : history) {
             file << log.attacker << "|" << log.defender << "|" << log.betrayal << "|" << log.attackerWon << "\n";
         }
         file.close();
-        std::cout << "Conflict history saved to " << filename << "\n";
+         cout << "Conflict history saved to " << filename << "\n";
     }
 }
 
-void ConflictSystem::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void ConflictSystem::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
         history.clear();
-        std::string line;
+         string line;
         while (getline(file, line)) {
             size_t p1 = line.find("|");
             size_t p2 = line.find("|", p1 + 1);
@@ -73,6 +73,6 @@ void ConflictSystem::loadFromFile(const std::string& filename) {
             history.push_back(log);
         }
         file.close();
-        std::cout << "Conflict history loaded from " << filename << "\n";
+         cout << "Conflict history loaded from " << filename << "\n";
     }
 }

@@ -7,18 +7,18 @@
 #include<vector>
 #include<map>
 #include<set>
-
-
-// Base class for all systems in the Stronghold game
+using namespace std;
+//manage whole system
 class System {
 public:
-    virtual void update() = 0; // Pure virtual function for system updates
-    virtual void saveToFile(const std::string& filename) = 0; // Save state to a file
-    virtual void loadFromFile(const std::string& filename) = 0; // Load state from a file
-    virtual ~System() {} // Virtual destructor for proper cleanup
+    virtual void update() = 0; 
+    virtual void saveToFile(const  string& filename) = 0; 
+    virtual void loadFromFile(const  string& filename) = 0; 
+    virtual ~System() {} 
 };
 
-// Population class to manage population dynamics
+// Population class
+// This class manages the population of the kingdom
 class Population : public System {
 private:
     int peasants;
@@ -31,12 +31,14 @@ public:
     void shrinkPopulation();
     void revolt();
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns population status as a string
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+     string getStatus() const; 
 };
-
-// Military class to manage the army
+// 
+// Military class
+// This class manages the military of the kingdom
+// It includes army size, morale, and corruption
 class Military : public System {
 private:
     int armySize;
@@ -50,12 +52,14 @@ public:
     void payArmy();
     void decreaseMorale();
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns military status as a string
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+     string getStatus() const; 
 };
 
-// Economy class to manage the kingdom's economy
+// Economy class
+// This class manages the economy of the kingdom
+// It includes treasury, tax rate, and inflation
 class Economy : public System {
 private:
     int treasury;
@@ -68,29 +72,31 @@ public:
     void adjustTaxRate(float newRate);
     void handleInflation();
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns economic status as a string
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+     string getStatus() const; 
 };
-
-// Leadership class to manage leadership mechanics
+// Leadership class
+// This class manages the leadership of the kingdom
 class Leadership : public System {
 private:
-    std::string leaderName;
-    std::string leadershipStyle; // e.g., "Democratic", "Autocratic"
+     string leaderName;
+     string leadershipStyle;
     bool isCoupAttempted;
 
 public:
     Leadership();
-    void electLeader(const std::string& name, const std::string& style);
+    void electLeader(const  string& name, const  string& style);
     void handleCoup();
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns leadership status as a string
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+     string getStatus() const;
 };
 
-// Banking class to manage loans, interest, and audits
+// Banking class
+// This class manages the banking system of the kingdom
+// It includes loan amount, interest rate, and fraud detection
 class Banking : public System {
 private:
     int loanAmount;
@@ -103,12 +109,14 @@ public:
     void auditBank();
     void repayLoan(int amount);
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns banking status as a string
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+     string getStatus() const; 
 };
 
-// Resources class to manage resource gathering and consumption
+// Resources class
+// This class manages the resources of the kingdom
+// It includes food, wood, stone, and iron
 class Resources : public System {
 private:
     int food;
@@ -122,28 +130,31 @@ public:
     void consumeResources(int foodConsumed, int woodConsumed, int stoneConsumed, int ironConsumed);
     void tradeResources(int foodTraded, int woodTraded, int stoneTraded, int ironTraded);
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns resource status as a string
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+     string getStatus() const; 
 };
 
-// Events class to handle random events like famine, war, etc.
+// Events class
+// This class manages random events that can occur in the kingdom
 class Events : public System {
 private:
-    std::string lastEvent;
-
+     string lastEvent;
 public:
     Events();
-    void triggerRandomEvent();
+    string triggerRandomEvent();
     void update() override;
-    void saveToFile(const std::string& filename) override;
-    void loadFromFile(const std::string& filename) override;
-    std::string getStatus() const; // Returns the last event triggered
+    void saveToFile(const  string& filename) override;
+    void loadFromFile(const  string& filename) override;
+    string getStatus() const;
 };
 
+// Kingdom class
+// This class represents a kingdom and manages all systems
+// It includes population, military, economy, leadership, banking, resources, and events
 class Kingdom {
 private:
-    std::string name;
+     string name;
     Population population;
     Military military;
     Economy economy;
@@ -151,10 +162,10 @@ private:
     Banking banking;
     Resources resources;
     Events events;
-   
+    string lastEvents = "No Event Triggerd";
 public:
-    Kingdom(const std::string& kingdomName);
-    std::string getName() const;
+    Kingdom(const  string& kingdomName);
+     string getName() const;
     Economy& getEconomy();
     Military& getMilitary();
     Banking& getBanking();
@@ -162,86 +173,98 @@ public:
     Resources& getResources();
     void updateAllSystems();
     void displayStatus() const;
-
-    // Save/load functionality
+    void eventTrigger();
+    string getLastEvent() const;
+    
     void saveState();
     void loadState();
 };
 
-
+// 
+// ChatSystem class
+// This class manages the chat system between kingdoms
 struct Message {
-    std::string sender;
-    std::string receiver;
-    std::string content;
+     string sender;
+     string receiver;
+     string content;
 };
 
 class ChatSystem {
 private:
-    std::vector<Message> chatLog;
+     vector<Message> chatLog;
 
 public:
-    void sendMessage(const std::string& sender, const std::string& receiver, const std::string& content);
+    void sendMessage(const  string& sender, const  string& receiver, const  string& content);
     void displayChat() const;
-    void saveChatToFile(const std::string& filename) const;
-    void loadChatFromFile(const std::string& filename);
+    void saveChatToFile(const  string& filename) const;
+    void loadChatFromFile(const  string& filename);
 };
-
+// 
+// DiplomacySystem class
+// This class manages alliances and conflicts between kingdoms
 class DiplomacySystem {
 private:
-    std::map<std::string, std::set<std::string>> alliances;
-    std::vector<std::string> history;
+     map< string,  set< string>> alliances;
+     vector< string> history;
 
 public:
-    void formAlliance(const std::string& k1, const std::string& k2);
-    void breakAlliance(const std::string& k1, const std::string& k2);
-    bool isAllied(const std::string& k1, const std::string& k2) const;
+    void formAlliance(const  string& k1, const  string& k2);
+    void breakAlliance(const  string& k1, const  string& k2);
+    bool isAllied(const  string& k1, const  string& k2) const;
 
     void viewAlliances() const;
     void viewHistory() const;
 
-    void saveToFile(const std::string& filename) const;
-    void loadFromFile(const std::string& filename);
+    void saveToFile(const  string& filename) const;
+    void loadFromFile(const  string& filename);
 };
 
 
+// TradeSystem class
+// This class manages trade and smuggling between kingdoms
+
 struct TradeRecord {
-    std::string sender;
-    std::string receiver;
-    std::string type;  // "Trade" or "Smuggle"
-    std::string resource;
+     string sender;
+     string receiver;
+     string type;  
+     string resource;
     int amount;
     bool success;
 };
 
+
+// TradeSystem class
+// This class manages trade and smuggling between kingdoms
+
 class TradeSystem {
 private:
-    std::vector<TradeRecord> history;
+     vector<TradeRecord> history;
 
 public:
-    void performTrade(const std::string& sender, const std::string& receiver, const std::string& resource, int amount);
-    void performSmuggling(const std::string& sender, const std::string& receiver, const std::string& resource, int amount);
+    void performTrade(const  string& sender, const  string& receiver, const  string& resource, int amount);
+    void performSmuggling(const  string& sender, const  string& receiver, const  string& resource, int amount);
 
     void viewHistory() const;
-    void saveToFile(const std::string& filename) const;
-    void loadFromFile(const std::string& filename);
+    void saveToFile(const  string& filename) const;
+    void loadFromFile(const  string& filename);
 };
 
 struct ConflictLog {
-    std::string attacker;
-    std::string defender;
+     string attacker;
+     string defender;
     bool betrayal;
     bool attackerWon;
 };
 
 class ConflictSystem {
 private:
-    std::vector<ConflictLog> history;
+     vector<ConflictLog> history;
 
 public:
     void declareWar(Kingdom& attacker, Kingdom& defender, DiplomacySystem& diplomacy);
     void viewConflictHistory() const;
-    void saveToFile(const std::string& filename) const;
-    void loadFromFile(const std::string& filename);
+    void saveToFile(const  string& filename) const;
+    void loadFromFile(const  string& filename);
 };
 
 
@@ -249,25 +272,26 @@ struct Position {
     int x, y;
 };
 
+// MapSystem class
+// This class manages the map of the kingdom
+// It includes the grid, kingdom positions, and structures
 class MapSystem {
 private:
     int width, height;
-    std::map<std::string, Position> kingdomPositions;
+     map< string, Position> kingdomPositions;
     Position pos;
-    const std::string name;
+    const  string name;
     char** grid;
 public:
-    MapSystem(int w = 10, int h = 10); // Default 10x10 grid
-    std::set<std::string> structures; // kingdom names with structures built
-    void buildStructure(const std::string& name, std::string strut);
-    bool hasStructure(const std::string& name) const;
+    MapSystem(int w = 10, int h = 10); 
+     set< string> structures; 
+    void buildStructure(const  string& name,  string strut);
+    bool hasStructure(const  string& name) const;
 
-    void placeKingdom(const std::string& name, int x, int y);
-    void moveKingdom(const std::string& name, const std::string& direction);
+    void placeKingdom(const  string& name, int x, int y);
+    void moveKingdom(const  string& name, const  string& direction);
     void displayMap() const;
-    Position getPosition(const std::string& name) const;
+    Position getPosition(const  string& name) const;
 };
 
 #endif
-
-

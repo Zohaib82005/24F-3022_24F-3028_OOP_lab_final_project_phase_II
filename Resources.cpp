@@ -15,14 +15,14 @@ void Resources::gatherResources() {
     wood += rand() % 40 + 10;    // Random wood gathered between 10 and 50
     stone += rand() % 30 + 5;    // Random stone gathered between 5 and 35
     iron += rand() % 20 + 5;     // Random iron gathered between 5 and 25
-    std::cout << "Resources gathered: Food=" << food << ", Wood=" << wood
+     cout << "Resources gathered: Food=" << food << ", Wood=" << wood
         << ", Stone=" << stone << ", Iron=" << iron << "\n";
 }
 
 // Method to consume resources
 void Resources::consumeResources(int foodConsumed, int woodConsumed, int stoneConsumed, int ironConsumed) {
     if (foodConsumed < 0 || woodConsumed < 0 || stoneConsumed < 0 || ironConsumed < 0) {
-        throw std::invalid_argument("Resource consumption values must be non-negative.");
+        throw  invalid_argument("Resource consumption values must be non-negative.");
     }
     food -= foodConsumed;
     wood -= woodConsumed;
@@ -35,14 +35,14 @@ void Resources::consumeResources(int foodConsumed, int woodConsumed, int stoneCo
     if (stone < 0) stone = 0;
     if (iron < 0) iron = 0;
 
-    std::cout << "Resources consumed: Food=" << foodConsumed << ", Wood=" << woodConsumed
+     cout << "Resources consumed: Food=" << foodConsumed << ", Wood=" << woodConsumed
         << ", Stone=" << stoneConsumed << ", Iron=" << ironConsumed << "\n";
 }
 
 // Method to trade resources
 void Resources::tradeResources(int foodTraded, int woodTraded, int stoneTraded, int ironTraded) {
     if (foodTraded > food || woodTraded > wood || stoneTraded > stone || ironTraded > iron) {
-        throw std::invalid_argument("Cannot trade more resources than available.");
+        throw  invalid_argument("Cannot trade more resources than available.");
     }
     food -= foodTraded;
     wood -= woodTraded;
@@ -55,7 +55,7 @@ void Resources::tradeResources(int foodTraded, int woodTraded, int stoneTraded, 
     stone += foodTraded + woodTraded + ironTraded;
     iron += foodTraded + woodTraded + stoneTraded;
 
-    std::cout << "Resources traded: Food=" << foodTraded << ", Wood=" << woodTraded
+     cout << "Resources traded: Food=" << foodTraded << ", Wood=" << woodTraded
         << ", Stone=" << stoneTraded << ", Iron=" << ironTraded << "\n";
 }
 
@@ -71,51 +71,51 @@ void Resources::update() {
         try {
             consumeResources(rand() % 50, rand() % 40, rand() % 30, rand() % 20);
         }
-        catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << "\n";
+        catch (const  exception& e) {
+             cerr << "Error: " << e.what() << "\n";
         }
         break;
     case 2:
         try {
             tradeResources(rand() % 10, rand() % 10, rand() % 10, rand() % 10);
         }
-        catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << "\n";
+        catch (const  exception& e) {
+             cerr << "Error: " << e.what() << "\n";
         }
         break;
     }
 }
 
 // Save resource state to a file
-void Resources::saveToFile(const std::string& filename) {
-    std::ofstream file(filename);
+void Resources::saveToFile(const  string& filename) {
+     ofstream file(filename);
     if (file.is_open()) {
         file << food << " " << wood << " " << stone << " " << iron;
         file.close();
-        std::cout << "Resource state saved to " << filename << "\n";
+         cout << "Resource state saved to " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to save resource state to file.\n";
+         cerr << "Error: Unable to save resource state to file.\n";
     }
 }
 
 // Load resource state from a file
-void Resources::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void Resources::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
         file >> food >> wood >> stone >> iron;
         file.close();
-        std::cout << "Resource state loaded from " << filename << "\n";
+         cout << "Resource state loaded from " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to load resource state from file.\n";
+         cout << "Error: Unable to load resource state from file.\n";
     }
 }
 
 // Get resource status as a string
-std::string Resources::getStatus() const {
-    return "Food: " + std::to_string(food) +
-        ", Wood: " + std::to_string(wood) +
-        ", Stone: " + std::to_string(stone) +
-        ", Iron: " + std::to_string(iron);
+ string Resources::getStatus() const {
+    return "Food: " +  to_string(food) +
+        ", Wood: " +  to_string(wood) +
+        ", Stone: " +  to_string(stone) +
+        ", Iron: " +  to_string(iron);
 }

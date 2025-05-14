@@ -10,36 +10,36 @@ Events::Events() : lastEvent("No Event") {
 }
 
 // Method to trigger a random event
-void Events::triggerRandomEvent() {
+string Events::triggerRandomEvent() {
     int eventType = rand() % 7; // Randomly select an event type (0-6)
     switch (eventType) {
     case 0:
         lastEvent = "Famine: Food supply has drastically decreased.";
-        std::cout << lastEvent << "\n";
+         return lastEvent ;
         break;
     case 1:
         lastEvent = "Disease Outbreak: Population health is severely affected.";
-        std::cout << lastEvent << "\n";
+         return lastEvent ;
         break;
     case 2:
         lastEvent = "War: Enemy forces are attacking your kingdom.";
-        std::cout << lastEvent << "\n";
+        return lastEvent;
         break;
     case 3:
         lastEvent = "Drought: Water sources have dried up, affecting agriculture.";
-        std::cout << lastEvent << "\n";
+        return lastEvent;
         break;
     case 4:
         lastEvent = "Betrayal: A trusted advisor has betrayed you.";
-        std::cout << lastEvent << "\n";
+        return lastEvent;
         break;
     case 5:
         lastEvent = "Bountiful Harvest: Resources are abundant this season.";
-        std::cout << lastEvent << "\n";
+        return lastEvent;
         break;
     case 6:
         lastEvent = "Weather Storm: Severe weather damages infrastructure.";
-        std::cout << lastEvent << "\n";
+        return lastEvent;
         break;
     }
 }
@@ -52,37 +52,36 @@ void Events::update() {
         triggerRandomEvent();
     }
     else {
-        std::cout << "No significant events occurred this turn.\n";
+         cout << "No significant events occurred this turn.\n";
     }
 }
 
 // Save event state to a file
-void Events::saveToFile(const std::string& filename) {
-    std::ofstream file(filename);
+void Events::saveToFile(const  string& filename) {
+     ofstream file(filename);
     if (file.is_open()) {
         file << lastEvent;
         file.close();
-        std::cout << "Event state saved to " << filename << "\n";
+         cout << "Event state saved to " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to save event state to file.\n";
+         cerr << "Error: Unable to save event state to file.\n";
     }
 }
 
 // Load event state from a file
-void Events::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
+void Events::loadFromFile(const  string& filename) {
+     ifstream file(filename);
     if (file.is_open()) {
-        std::getline(file, lastEvent); // Read the entire line as the last event
+         getline(file, lastEvent); // Read the entire line as the last event
         file.close();
-        std::cout << "Event state loaded from " << filename << "\n";
+         cout << "Event state loaded from " << filename << "\n";
     }
     else {
-        std::cerr << "Error: Unable to load event state from file.\n";
+         cout << "Error: Unable to load event state from file.\n";
     }
 }
-
 // Get event status as a string
-std::string Events::getStatus() const {
+ string Events::getStatus() const {
     return "Last Event: " + lastEvent;
 }
