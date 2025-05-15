@@ -172,6 +172,7 @@ public:
     Leadership& getLeadership();
     Resources& getResources();
     void updateAllSystems();
+    void reduceResourc(int f, int w, int s, int i);
     void displayStatus() const;
     void eventTrigger();
     string getLastEvent() const;
